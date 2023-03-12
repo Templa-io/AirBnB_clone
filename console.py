@@ -2,8 +2,7 @@
 """Module for the entry point of the command interpreter."""
 
 import cmd
-from models.base_model import BaseModel
-from models import storage
+from models
 import re
 import json
 
@@ -119,6 +118,24 @@ class HBNBCommand(cmd.Cmd):
             words = line.split(' ')
             if words[0] not in storage.classes():
                 print("** class doesn't exist **")
+    def do_show(self, line):
+        """Prints the string representation of an instance.
+        """
+        if line == "" or line is None:
+            print("** class name missing **")
+        else:
+            words = line.split(' ')
+            if words[0] not in storage.classes():
+                print("** class doesn't exist **")
+    def do_show(self, line):
+        """Prints the string representation of an instance.
+        """
+        if line == "" or line is None:
+            print("** class name missing **")
+        else:
+            words = line.split(' ')
+            if words[0] not in storage.classes():
+                print("** class doesn't exist **")
             elif len(words) < 2:
                 print("** instance id missing **")
             else:
@@ -205,21 +222,3 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 cast = None
-                if not re.search('^".*"$', value):
-                    if '.' in value:
-                        cast = float
-                    else:
-                        cast = int
-                else:
-                    value = value.replace('"', '')
-                attributes = storage.attributes()[classname]
-                if attribute in attributes:
-                    value = attributes[attribute](value)
-                elif cast:
-                    try:
-                        value = cast(value)
-                    except ValueError:
-                        pass  # fine, stay a string then
-                setattr(storage.all()[key], attribute, value)
-                storage.all()[key].save()
-
